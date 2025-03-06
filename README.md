@@ -58,7 +58,7 @@ python manage.py load_data
  python manage.py runserver
  ```
  ### The endpoint can be accessed at http://127.0.0.1:8000/statistics/
-### Expected JSON Response Format
+### JSON Response Format
 ```json
 {
   "highest_ctc": {

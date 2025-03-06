@@ -1,37 +1,60 @@
 # College Placement Statistics API
-
-## Overview
-You have been provided with three CSV files containing college placement data:
-
-### 1. students.csv
-Contains basic student information:
-- **id**: Unique identifier for each student (e.g., 210010001)
-- **rollno**: Student's roll number (same as id)
-- **batch**: Academic batch year (all students are from batch 2021)
-- **branch**: Department/Branch (CSE, EP, EE, MNC, MMAE, CIVIL, CHEMICAL)
-
-### 2. placements.csv
-Contains company placement opportunities:
-- **id**: Unique identifier for each placement opportunity
-- **name**: Company name 
-- **role**: Job role 
-- **ctc**: Compensation/salary in lakhs per annum 
-
-### 3. placement_applications.csv
-Contains the mapping between students and their placement applications:
-- **id**: Unique identifier for each application
-- **placementid**: References the id from placements.csv
-- **studentid**: References the id from students.csv
-- **selected**: Boolean indicating whether the student was selected (True/False)
-
-## Key Relationships
-- A student (from students.csv) can apply to multiple companies.
-- Each application (in placement_applications.csv) links a student to a placement opportunity.
-- The **selected** field in placement_applications.csv tells us whether the student was selected or not.
-
-## Task
-Develop a **Django-based RESTful API** that provides statistical insights into student placements. The API should expose a **GET** endpoint at: "/statistics" returning the 
-expected JSON Format
+## Instructions
+### Initial Setup(To be done in a Linux machine or wsl2)
+ ```bash 
+sudo apt update
+sudo apt install libpq-dev python3-dev postgresql postgresql-contrib
+git clone
+cd 
+python -m venv myenv
+source myenv/bin/activate
+pip install -r requirements.txt
+```
+### Setting up PostgreSQL server
+```bash
+sudo systemctl start postgresql
+sudo -i -u postgres
+psql
+ ```
+ For stopping server
+ ```bash
+sudo systemctl stop postgresql
+ ```
+ #### In the SQL shell
+ ```sql
+ CREATE DATABASE stats_db;
+ CREATE USER <username> WITH PASSWORD '<password>';
+GRANT ALL PRIVILEGES ON DATABASE placement_db TO <username>;
+ALTER USER <username> WITH SUPERUSER;
+\q
+exit
+ ```
+#### In restapiproject/restapiproject/settings.py
+Alter to add your created credentials
+```python 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'stats_db',  
+        'USER': '<username>',  
+        'PASSWORD': '<password>',  
+        'HOST': 'localhost', 
+        'PORT': '5432', 
+    }
+}
+```
+### Setting up and starting the Django server
+Loading data into database
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py load_data
+ ```
+ Start server
+ ```bash
+ python manage.py runserver
+ ```
+ ### The endpoint can be accessed at http://127.0.0.1:8000/statistics/
 ### Expected JSON Response Format
 ```json
 {
@@ -73,14 +96,4 @@ expected JSON Format
   ]
 }
 ```
-- If any field in the response is empty, return null
-## Submission Guidelines
-- Provide a GitHub repository link with your Django project.
-- Include a `README.md` file with setup instructions.
-
-## Evaluation Criteria
-- Correctness of the API implementation.
-- Code readability and structure.
-
-Good luck! 🚀
 

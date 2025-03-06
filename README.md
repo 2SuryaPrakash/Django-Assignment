@@ -4,8 +4,8 @@
  ```bash 
 sudo apt update
 sudo apt install libpq-dev python3-dev postgresql postgresql-contrib
-git clone
-cd 
+git clone https://github.com/2SuryaPrakash/Django-Assignment.git
+cd Django-Assignment
 python -m venv myenv
 source myenv/bin/activate
 pip install -r requirements.txt

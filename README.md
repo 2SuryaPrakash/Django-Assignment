@@ -1,4 +1,7 @@
 # College Placement Statistics API
+Submission to CDC recruitment assignment. A RESTful api written using Django and Postgre to handle placement stats.
+
+Note: the .csv files given are placed in restapiproject/statsapi/data
 ## Instructions
 ### Initial Setup(To be done in a Linux machine or wsl2)
  ```bash 
